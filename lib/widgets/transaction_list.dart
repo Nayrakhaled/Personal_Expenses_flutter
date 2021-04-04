@@ -12,7 +12,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (ctx, consraints)=> Container(
+      builder: (ctx, consraints) => Container(
         height: 450,
         child: transactions.isEmpty
             ? Column(
@@ -21,9 +21,7 @@ class TransactionList extends StatelessWidget {
                     'No transactions added yet!',
                     style: Theme.of(context).textTheme.title,
                   ),
-                  SizedBox(
-                    height: consraints.maxHeight * 0.2
-                  ),
+                  SizedBox(height: consraints.maxHeight * 0.2),
                   Container(
                       height: consraints.maxHeight * 0.6,
                       child: Image.asset(
@@ -57,11 +55,18 @@ class TransactionList extends StatelessWidget {
                       subtitle: Text(
                         DateFormat.yMMMd().format(transactions[index].date),
                       ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete),
-                        color: Theme.of(context).errorColor,
-                        onPressed: () => deleteTx(transactions[index].id),
-                      ),
+                      trailing: MediaQuery.of(context).size.width > 360
+                          ? FlatButton.icon(
+                              textColor: Theme.of(context).errorColor,
+                              onPressed: () => deleteTx(transactions[index].id),
+                              icon: Icon(Icons.delete),
+                              label: Text("Delete"),
+                            )
+                          : IconButton(
+                              icon: Icon(Icons.delete),
+                              color: Theme.of(context).errorColor,
+                              onPressed: () => deleteTx(transactions[index].id),
+                            ),
                     ),
                   );
                 },
